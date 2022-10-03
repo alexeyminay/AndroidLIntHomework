@@ -4,17 +4,28 @@ plugins {
     id 'com.android.lint'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+lintOptions {
+    htmlReport true
+    htmlOutput file("lint-report.html")
+    textReport true
+    absolutePaths false
+    ignoreTestSources true
 }
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
-    def lintVersion = '30.2.0'
-    implementation "com.android.tools.lint:lint-api:$lintVersion"
-    implementation "com.android.tools.lint:lint-checks:$lintVersion"
-    testImplementation "com.android.tools.lint:lint-tests:$lintVersion"
-    testImplementation 'junit:junit:4.13.2'
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compileOnly "com.android.tools.lint:lint-api:30.1.1"
+    compileOnly "com.android.tools.lint:lint-checks:30.1.1"
+
+    testImplementation "com.android.tools.lint:lint:30.1.1"
+    testImplementation "com.android.tools.lint:lint-tests:30.1.1"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 
 jar {

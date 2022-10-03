@@ -21,7 +21,7 @@ class GlobalScopeDetector: Detector(), Detector.UastScanner  {
                         issue = ISSUE,
                         scope = node,
                         location = context.getLocation(node),
-                        message = "adffads"
+                        message = BRIEF
                     )
                 }
             }
@@ -30,10 +30,14 @@ class GlobalScopeDetector: Detector(), Detector.UastScanner  {
 
     companion object {
 
+        private const val BRIEF = "brief description"
+        private const val EXPLANATION = "explanation"
+        private const val ID = "id"
+
         val ISSUE = Issue.create(
-            id = UUID.randomUUID().toString(),
-            briefDescription = "brief",
-            explanation = "explanation",
+            id = ID,
+            briefDescription = BRIEF,
+            explanation = EXPLANATION,
             category = Category.LINT,
             priority = 3,
             severity = Severity.ERROR,

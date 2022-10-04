@@ -30,4 +30,46 @@ internal class GlobalScopeDetectorTest {
             .expectErrorCount(2)
     }
 
+    @Test
+    fun `second`() {
+        lint()
+            .allowMissingSdk()
+            .files(
+                kotlin(
+                    """
+                        package checks
+
+                        class TestViewModel : TestParentViewModel() {
+                            fun onCreate() {
+                                GlobalScope.launch{ }
+                            }
+                        }
+                    """.trimIndent()
+                ),
+                kotlin(
+                    """
+                        package checks
+    
+                        import androidx.lifecycle.ViewModel
+
+                        class TestParentViewModel : ViewModel() {
+
+                        }
+                    """.trimIndent()
+                ),
+                kotlin(
+                    """
+                        package androidx.lifecycle
+
+                        class ViewModel {
+
+                        }
+                    """.trimIndent()
+                )
+            )
+            .issues(GlobalScopeDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
 }
